@@ -2,20 +2,21 @@
   "name": "@groceries/shared-types",
   "version": "1.0.0",
   "description": "Shared types for my groceries application",
-  "main": "dist/index.js",
-  "types": "dist/index.d.ts",
+  "main": "dist/src/index.js",
+  "types": "dist/src/index.d.ts",
   "scripts": {
-    "build": "tsc", 
-    "prepublishOnly": "npm run build" 
+    "clean": "rm -rf dist",
+    "build": "npm run clean && tsc",
+    "prepublishOnly": "npm run build"
   },
   "devDependencies": {
     "typescript": "~5.8.3",
     "zod": "^3.24.1"
   },
-  "files": [ 
+  "files": [
     "dist"
   ],
   "publishConfig": {
-    "access": "restricted" 
+    "access": "restricted"
   }
 }
