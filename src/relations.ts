@@ -1,7 +1,20 @@
-import z from 'zod';
 import { userSchema } from './users';
+import z from 'zod';
 
-export const baseTaskSchema = z.object({
+export const permissionEnum = z.enum(['owner', 'edit']);
+export type permissionEnumType = z.infer<typeof permissionEnum>;
+export const permissionSchema = z.object({
+  permission: permissionEnum,
+});
+export type PermissionType = z.infer<typeof permissionSchema>;
+
+
+export const relation_location = z.union([
+  z.literal('Local'),
+  z.literal('Server'),
+])
+
+export const basicTaskSchema = z.object({
   id: z.string().uuid(),
   task: z.string(),
   created_at: z.string().datetime(),
@@ -10,17 +23,19 @@ export const baseTaskSchema = z.object({
   task_relations_id: z.string().uuid(),
 });
 
-export const TaskSchema = baseTaskSchema.refine(
+export const TaskSchema = basicTaskSchema.refine(
   (data) => !(data.completed_at && !data.completed_by),
   {
     message: 'completed_by isnt defined when completed_at is',
     path: ['completed_by'],
   }
 );
+export type TaskType = z.infer<typeof TaskSchema>;
+
 
 export const baseModifyTaskSchema = z
   .object({
-    completed_at: z.string().date().nullable().optional(),
+    completed_at: z.string().datetime().nullable().optional(),
     completed_by: z.string().uuid().nullable().optional(),
     task: z.string().optional(),
   })
@@ -29,10 +44,6 @@ export const baseModifyTaskSchema = z
     path: ['completed_by'],
   });
 
-export const newTaskSchema = TaskSchema.transform((data) => ({
-  ...data,
-  created_at: new Date().toISOString(),
-}));
 export const patchTaskSchema = baseModifyTaskSchema.transform((data) => {
   if (!data.completed_at && !data.completed_by)
     return { ...data, completed_at: null, completed_by: null };
@@ -41,7 +52,7 @@ export const patchTaskSchema = baseModifyTaskSchema.transform((data) => {
   }
   return { ...data };
 });
-export const editTaskSchema = baseTaskSchema.transform((data) => {
+export const editTaskSchema = basicTaskSchema.transform((data) => {
   if (!data.completed_at && !data.completed_by) {
     return { ...data, completed_at: null, completed_by: null };
   }
@@ -54,90 +65,37 @@ export const editTaskSchema = baseTaskSchema.transform((data) => {
   return { ...data };
 });
 
-export const TaskRelationsBasicSchema = z.object({
+export const BasicRelationSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),
-  relation_location: z.string().default('Server'),
+  relation_location: relation_location.default('Server'),
   created_at: z.string().datetime(),
 });
-export type TaskRelationsBasicType = z.infer<typeof TaskRelationsBasicSchema>;
-export const TaskRelationSchema = TaskRelationsBasicSchema.extend({
+export type BasicRelationType = z.infer<typeof BasicRelationSchema>;
+
+export const ServerRelationSchema = BasicRelationSchema.extend({
+  relation_location: z.literal('Server')
+})
+export type ServerRelationType = z.infer<typeof ServerRelationSchema>;
+
+export const BasicRelationWithTasksSchema = BasicRelationSchema.extend({
   tasks: TaskSchema.array(),
 });
-export const newTaskRelationSchema = TaskRelationSchema.transform((data) => ({
-  ...data,
-  created_at: new Date().toISOString(),
-}));
-export const getRelationsResponseSchema = TaskRelationsBasicSchema.extend({
-  my_permission: z.string(),
-  shared_with_id: z.string().uuid(),
-  shared_with_name: z.string(),
-  shared_with_email: z.string().email(),
-});
+export type BasicRelationWithTasksType = z.infer<typeof BasicRelationWithTasksSchema>;
 
-export type getRelationsResponseType = z.infer<
-  typeof getRelationsResponseSchema
->;
-export type TaskRelationType = z.infer<typeof TaskRelationSchema>;
-export type TaskType = z.infer<typeof TaskSchema>;
+export const ServerRelationWithTasksSchema = BasicRelationWithTasksSchema.extend({
+  relation_location: z.literal('Server'),
+})
+export type ServerRelationWithTasksType = z.infer<typeof ServerRelationWithTasksSchema>;
 
-export const permissionSchema = z.object({
-  permission: z.enum(['owner', 'edit']),
-});
-export type PermissionType = z.infer<typeof permissionSchema>;
+export const LocalRelationWithTasksSchema = BasicRelationWithTasksSchema.extend({
+  relation_location: z.literal('Local'),
+})
+export type LocalRelationWithTasksType = z.infer<typeof LocalRelationWithTasksSchema>;
 
-export const postRelationAndShareWithUserRequestSchema = z.object({
-  task_relations: newTaskRelationSchema.array(),
-  user_shared_with: userSchema.pick({ id: true }).shape.id,
-});
 
-export const postTaskToRelationReqSchema = z.object({
-  task: baseTaskSchema.omit({ id: true }),
-});
-
-export const shareRelationWithUserReqSchema = z.object({
-  task_relations_id: TaskRelationSchema.pick({ id: true }).shape.id,
-  user_id: userSchema.pick({ id: true }).shape.id,
-});
-export const editRelationsTaskByIdReqParamsSchema = z.object({
-  relation_id: TaskRelationSchema.pick({ id: true }).shape.id,
-  task_id: baseTaskSchema.pick({ id: true }).shape.id,
-});
-export const editRelationsTaskByIdReqBodySchema = baseTaskSchema
-  .omit({ id: true, task_relations_id: true, created_at: true })
-  .partial();
-
-export const removeTaskFromRelationReqParams = z.object({
-  relation_id: TaskRelationSchema.pick({ id: true }).shape.id,
-  task_id: baseTaskSchema.pick({ id: true }).shape.id,
-});
-export const getRelationsByIdReqParams = z.object({
-  relation_id: TaskRelationSchema.pick({ id: true }).shape.id,
-});
-
-export const getRelationByIdQueryResponseSchema = z.object({
-  relation_id: z.string().uuid(),
-  relation_name: z.string(),
-  relation_created_at: z.string().datetime(),
-  relation_location: z.string().default('Server'),
-  task_id: z.string().uuid(),
-  task_task: z.string(),
-  task_created_at: z.string().datetime(),
-  task_completed_by: z.string().uuid().nullable(),
-  task_completed_at: z.string().datetime(),
-  task_relations_id: z.string().uuid(),
-});
-export type getRelationByIdQueryResponseType = z.infer<
-  typeof getRelationByIdQueryResponseSchema
->;
-export const deleteRelationParamsSchema = z.object({
-  relation_id: z.string().uuid().or(z.string().uuid().array()),
-});
-export type deleteRelationParamsType = z.infer<
-  typeof deleteRelationParamsSchema
->;
-
-export const editRelationNameBodySchema = z.object({
-  relation_id: z.string().uuid(),
-  new_name: z.string().min(1, 'Name must be at least 1 character long'),
-});
+export const ServerRelationWithTasksAndPermissions = ServerRelationWithTasksSchema.extend({
+  permission: permissionEnum,
+  shared_with: userSchema.omit({password:true}).array()
+})
+export type ServerRelationWithTasksAndPermissionsType = z.infer<typeof ServerRelationWithTasksAndPermissions>;
