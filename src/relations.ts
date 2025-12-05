@@ -1,19 +1,6 @@
 import { userSchema } from './users';
 import z from 'zod';
 
-export const permissionEnum = z.enum(['owner', 'edit']);
-export type permissionEnumType = z.infer<typeof permissionEnum>;
-export const permissionSchema = z.object({
-  permission: permissionEnum,
-});
-export type PermissionType = z.infer<typeof permissionSchema>;
-
-
-export const relation_location = z.union([
-  z.literal('Local'),
-  z.literal('Server'),
-])
-
 export const basicTaskSchema = z.object({
   id: z.string().uuid(),
   task: z.string(),
@@ -31,7 +18,6 @@ export const TaskSchema = basicTaskSchema.refine(
   }
 );
 export type TaskType = z.infer<typeof TaskSchema>;
-
 
 export const baseModifyTaskSchema = z
   .object({
@@ -65,37 +51,51 @@ export const editTaskSchema = basicTaskSchema.transform((data) => {
   return { ...data };
 });
 
+export const permissionEnum = z.enum(['owner', 'edit']);
+export type PermissionEnumType = z.infer<typeof permissionEnum>;
+export const permissionSchema = z.object({
+  permission: permissionEnum,
+});
+export type PermissionType = z.infer<typeof permissionSchema>;
+
+export const relation_location = z.union([z.literal('Local'), z.literal('Server')]);
+
 export const BasicRelationSchema = z.object({
   id: z.string().uuid(),
   name: z.string(),
   relation_location: relation_location.default('Server'),
   created_at: z.string().datetime(),
 });
-export type BasicRelationType = z.infer<typeof BasicRelationSchema>;
 
 export const ServerRelationSchema = BasicRelationSchema.extend({
-  relation_location: z.literal('Server')
-})
+  relation_location: z.literal('Server'),
+  permission: permissionEnum,
+  shared_with: userSchema.omit({ password: true }).array(),
+});
 export type ServerRelationType = z.infer<typeof ServerRelationSchema>;
+
+export const LocalRelationSchema = BasicRelationSchema.extend({
+  relation_location: z.literal('Local'),
+});
+
+export const LocalRelationWithTasksSchema = LocalRelationSchema.extend({
+  tasks: TaskSchema.array(),
+});
+export type LocalRelationWithTasksType = z.infer<typeof LocalRelationWithTasksSchema>;
 
 export const BasicRelationWithTasksSchema = BasicRelationSchema.extend({
   tasks: TaskSchema.array(),
 });
 export type BasicRelationWithTasksType = z.infer<typeof BasicRelationWithTasksSchema>;
 
-export const ServerRelationWithTasksSchema = BasicRelationWithTasksSchema.extend({
-  relation_location: z.literal('Server'),
-})
-export type ServerRelationWithTasksType = z.infer<typeof ServerRelationWithTasksSchema>;
-
-export const LocalRelationWithTasksSchema = BasicRelationWithTasksSchema.extend({
-  relation_location: z.literal('Local'),
-})
-export type LocalRelationWithTasksType = z.infer<typeof LocalRelationWithTasksSchema>;
-
+export const ServerRelationWithTasksSchema = ServerRelationSchema.extend({
+  tasks: TaskSchema.array(),
+});
 
 export const ServerRelationWithTasksAndPermissions = ServerRelationWithTasksSchema.extend({
   permission: permissionEnum,
-  shared_with: userSchema.omit({password:true}).array()
-})
-export type ServerRelationWithTasksAndPermissionsType = z.infer<typeof ServerRelationWithTasksAndPermissions>;
+  shared_with: userSchema.omit({ password: true }).array(),
+});
+export type ServerRelationWithTasksAndPermissionsType = z.infer<
+  typeof ServerRelationWithTasksAndPermissions
+>;

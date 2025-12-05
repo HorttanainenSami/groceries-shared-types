@@ -1,7 +1,10 @@
-import { ServerRelationSchema, BasicRelationWithTasksSchema, BasicRelationSchema } from './relations';
+import {
+  ServerRelationSchema,
+  BasicRelationWithTasksSchema,
+  BasicRelationSchema,
+} from './relations';
 import { userSchema } from './users';
 import z from 'zod';
-
 
 export const getRelationsResponseSchema = ServerRelationSchema.extend({
   my_permission: z.string(),
@@ -10,8 +13,7 @@ export const getRelationsResponseSchema = ServerRelationSchema.extend({
   shared_with_email: z.string().email(),
 });
 
-export type getRelationsResponseType = z.infer<typeof getRelationsResponseSchema>;
-
+export type GetRelationsResponseType = z.infer<typeof getRelationsResponseSchema>;
 
 export const postRelationAndShareWithUserRequestSchema = z.object({
   task_relations: BasicRelationWithTasksSchema.array(),
@@ -30,22 +32,17 @@ export const getRelationByIdQueryResponseSchema = z.object({
   task_completed_at: z.date().nullable(),
   task_relations_id: z.string().uuid(),
 });
-export type getRelationByIdQueryResponseType = z.infer<
-  typeof getRelationByIdQueryResponseSchema
->;
+export type GetRelationByIdQueryResponseType = z.infer<typeof getRelationByIdQueryResponseSchema>;
 export const deleteRelationParamsSchema = z.union([
   BasicRelationSchema.pick({ id: true }).array(),
-  BasicRelationSchema.pick({ id: true })
+  BasicRelationSchema.pick({ id: true }),
 ]);
-export type deleteRelationParamsType = z.infer<
-  typeof deleteRelationParamsSchema
->;
+export type DeleteRelationParamsType = z.infer<typeof deleteRelationParamsSchema>;
 
 export const editRelationNameBodySchema = z.object({
   relation_id: z.string().uuid(),
   new_name: z.string().min(1, 'Name must be at least 1 character long'),
 });
-
 
 export const socketRelationChangeNamePayload = z.object({
   id: z.string().uuid(),
