@@ -1,7 +1,6 @@
 import {
   ServerRelationSchema,
-  BasicRelationWithTasksSchema,
-  BasicRelationSchema,
+  RelationWithTasksSchema,
 } from './relations';
 import { userSchema } from './users';
 import z from 'zod';
@@ -16,26 +15,14 @@ export const getRelationsResponseSchema = ServerRelationSchema.extend({
 export type GetRelationsResponseType = z.infer<typeof getRelationsResponseSchema>;
 
 export const postRelationAndShareWithUserRequestSchema = z.object({
-  task_relations: BasicRelationWithTasksSchema.array(),
+  task_relations: RelationWithTasksSchema.array(),
   user_shared_with: userSchema.pick({ id: true }).shape.id,
 });
 
-export const getRelationByIdQueryResponseSchema = z.object({
-  relation_id: z.string().uuid(),
-  relation_name: z.string(),
-  relation_created_at: z.date(),
-  relation_location: z.literal('Server'),
-  task_id: z.string().uuid(),
-  task_task: z.string(),
-  task_created_at: z.date(),
-  task_completed_by: z.string().uuid().nullable(),
-  task_completed_at: z.date().nullable(),
-  task_relations_id: z.string().uuid(),
-});
-export type GetRelationByIdQueryResponseType = z.infer<typeof getRelationByIdQueryResponseSchema>;
+
 export const deleteRelationParamsSchema = z.union([
-  BasicRelationSchema.pick({ id: true }).array(),
-  BasicRelationSchema.pick({ id: true }),
+  ServerRelationSchema.pick({ id: true }).array(),
+  ServerRelationSchema.pick({ id: true }),
 ]);
 export type DeleteRelationParamsType = z.infer<typeof deleteRelationParamsSchema>;
 

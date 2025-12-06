@@ -77,25 +77,18 @@ export type ServerRelationType = z.infer<typeof ServerRelationSchema>;
 export const LocalRelationSchema = BasicRelationSchema.extend({
   relation_location: z.literal('Local'),
 });
+export type LocalRelationType = z.infer<typeof LocalRelationSchema>;
 
 export const LocalRelationWithTasksSchema = LocalRelationSchema.extend({
   tasks: TaskSchema.array(),
 });
 export type LocalRelationWithTasksType = z.infer<typeof LocalRelationWithTasksSchema>;
 
-export const BasicRelationWithTasksSchema = BasicRelationSchema.extend({
-  tasks: TaskSchema.array(),
-});
-export type BasicRelationWithTasksType = z.infer<typeof BasicRelationWithTasksSchema>;
 
 export const ServerRelationWithTasksSchema = ServerRelationSchema.extend({
   tasks: TaskSchema.array(),
 });
+export type ServerRelationWithTasksType = z.infer<typeof ServerRelationWithTasksSchema>;
 
-export const ServerRelationWithTasksAndPermissions = ServerRelationWithTasksSchema.extend({
-  permission: permissionEnum,
-  shared_with: userSchema.omit({ password: true }).array(),
-});
-export type ServerRelationWithTasksAndPermissionsType = z.infer<
-  typeof ServerRelationWithTasksAndPermissions
->;
+export const RelationWithTasksSchema = z.discriminatedUnion('relation_location', [LocalRelationWithTasksSchema, ServerRelationWithTasksSchema])
+export type RelationWithTasksType = z.infer<typeof RelationWithTasksSchema>;

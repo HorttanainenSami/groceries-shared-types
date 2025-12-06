@@ -1,10 +1,10 @@
 import {
   ServerRelationType,
-  BasicRelationWithTasksType,
+  RelationWithTasksType,
   TaskType,
-  ServerRelationWithTasksAndPermissionsType,
+  ServerRelationWithTasksType,
 } from './relations';
-import { GetRelationsResponseType, DeleteRelationParamsType } from './relationsApi';
+import { DeleteRelationParamsType } from './relationsApi';
 import { UserType } from './users';
 import { Server, Socket } from 'socket.io';
 import { Socket as ClientSocket } from 'socket.io-client';
@@ -27,9 +27,9 @@ export interface ServerToClientEvents {
   'relations:change_name': (payload: ServerRelationType) => void;
   'relations:delete': (payload: [boolean, string][]) => void;
 
-  'relations:share': (payload: ServerRelationWithTasksAndPermissionsType[]) => void;
+  'relations:share': (payload: ServerRelationWithTasksType[]) => void;
 
-  'task:join': (payload: { data: ServerRelationWithTasksAndPermissionsType }) => void;
+  'task:join': (payload: { data: ServerRelationWithTasksType }) => void;
   'task:create': (payload: { data: TaskType }) => void;
 
   'task:edit': (payload: { edited_task: TaskType }) => void;
@@ -39,19 +39,19 @@ export interface ServerToClientEvents {
 }
 export type ClientToServerRelatiosChangeName = { id: string; name: string };
 export type ClientToServerRelatiosShare = {
-  task_relations: BasicRelationWithTasksType | BasicRelationWithTasksType[];
+  task_relations: RelationWithTasksType | RelationWithTasksType[];
   user_shared_with: string;
 };
 
 // Client to Server Events (what client emits to server)
 export interface ClientToServerEvents {
   'relations:get_relations': (
-    callback: (res: AckResponse<GetRelationsResponseType[]>) => void
+    callback: (res: AckResponse<ServerRelationType[]>) => void
   ) => void;
 
   'relations:change_name': (
     payload: ClientToServerRelatiosChangeName,
-    callback: (res: AckResponse<GetRelationsResponseType>) => void
+    callback: (res: AckResponse<ServerRelationType>) => void
   ) => void;
 
   'relations:delete': (
@@ -61,14 +61,14 @@ export interface ClientToServerEvents {
 
   'relations:share': (
     payload: ClientToServerRelatiosShare,
-    callback: (res: AckResponse<ServerRelationWithTasksAndPermissionsType[]>) => void
+    callback: (res: AckResponse<ServerRelationWithTasksType[]>) => void
   ) => void;
 
   'task:join': (
     payload: {
       relation_id: string;
     },
-    callback: (res: AckResponse<ServerRelationWithTasksAndPermissionsType>) => void
+    callback: (res: AckResponse<ServerRelationWithTasksType>) => void
   ) => void;
   'task:create': (
     payload: {
