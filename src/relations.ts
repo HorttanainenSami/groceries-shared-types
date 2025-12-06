@@ -92,3 +92,6 @@ export type ServerRelationWithTasksType = z.infer<typeof ServerRelationWithTasks
 
 export const RelationWithTasksSchema = z.discriminatedUnion('relation_location', [LocalRelationWithTasksSchema, ServerRelationWithTasksSchema])
 export type RelationWithTasksType = z.infer<typeof RelationWithTasksSchema>;
+
+export const RelationSchema = z.discriminatedUnion('relation_location', [LocalRelationSchema, ServerRelationSchema]);
+export type RelationType = z.infer<typeof RelationSchema>;
