@@ -35,3 +35,16 @@ export const socketRelationChangeNamePayload = z.object({
   id: z.string().uuid(),
   name: z.string(),
 });
+
+export const createAndShareRelationsSchema = z.object({
+  relationsWithTasks: RelationWithTasksSchema.array(),
+  userSharedWith: z.string(),
+  id: z.string(),
+});
+export type createAndShareRelationsType = z.infer<typeof createAndShareRelationsSchema>;
+
+export const getRelationsByIdPropsSchema = z.object({
+  userId: userSchema.pick({id: true}),
+  relationId : ServerRelationSchema.pick({id: true})
+})
+export type getRelationsByIdProps = z.infer<typeof getRelationsByIdPropsSchema>;
