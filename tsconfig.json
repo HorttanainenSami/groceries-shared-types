@@ -4,11 +4,10 @@
     "module": "commonjs",
     "lib": ["es2018", "dom"],
     "outDir": "./dist",
+    "rootDir": "./src",
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
-    "emitDeclarationOnly": true,
-    "composite": true,
     "baseUrl": "./src",
     "paths": {
       "@/*": ["./src*"]

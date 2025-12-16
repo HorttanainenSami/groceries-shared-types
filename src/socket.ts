@@ -1,7 +1,7 @@
+import { TaskType } from './task';
 import {
   ServerRelationType,
   RelationWithTasksType,
-  TaskType,
   ServerRelationWithTasksType,
 } from './relations';
 import { DeleteRelationParamsType } from './relationsApi';
