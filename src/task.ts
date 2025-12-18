@@ -25,6 +25,7 @@ export const baseModifyTaskSchema = z
     completed_at: z.string().datetime().nullable().optional(),
     completed_by: z.string().uuid().nullable().optional(),
     task: z.string().optional(),
+    order_idx: z.number().optional(),
   })
   .refine((data) => !(data.completed_at && !data.completed_by), {
     message: 'completed_by isnt defined when completed_at is',

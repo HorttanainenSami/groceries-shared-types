@@ -34,6 +34,7 @@ export interface ServerToClientEvents {
 
   'task:edit': (payload: { edited_task: TaskType }) => void;
   'task:remove': (payload: { remove_tasks: TaskType[] }) => void;
+  'task:reorder': (payload: {reordered_tasks: TaskType[]}) => void;
 
   error: (data: { message: string }) => void;
 }
@@ -85,6 +86,12 @@ export interface ClientToServerEvents {
   'task:remove': (
     payload: {
       remove_tasks: TaskType[];
+    },
+    callback: (res: AckResponse<TaskType[]>) => void
+  ) => void;
+  'task:reorder': (
+    payload: {
+      reodred_tasks: TaskType[];
     },
     callback: (res: AckResponse<TaskType[]>) => void
   ) => void;
