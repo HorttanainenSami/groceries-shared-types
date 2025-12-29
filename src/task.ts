@@ -1,6 +1,5 @@
 import z from 'zod';
 
-
 export const basicTaskSchema = z.object({
   id: z.string().uuid(),
   task: z.string(),
@@ -8,6 +7,7 @@ export const basicTaskSchema = z.object({
   completed_by: z.string().uuid().nullable(),
   completed_at: z.string().datetime().nullable(),
   task_relations_id: z.string().uuid(),
+  last_modified: z.string().datetime(),
   order_idx: z.number().default(9999),
 });
 
