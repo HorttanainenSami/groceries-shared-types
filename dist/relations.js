@@ -17,6 +17,7 @@ exports.BasicRelationSchema = zod_1.default.object({
     name: zod_1.default.string(),
     relation_location: exports.relation_location,
     created_at: zod_1.default.string().datetime(),
+    last_modified: zod_1.default.string().datetime(),
 });
 exports.ServerRelationSchema = exports.BasicRelationSchema.extend({
     relation_location: zod_1.default.literal('Server'),
@@ -32,6 +33,12 @@ exports.LocalRelationWithTasksSchema = exports.LocalRelationSchema.extend({
 exports.ServerRelationWithTasksSchema = exports.ServerRelationSchema.extend({
     tasks: task_1.TaskSchema.array(),
 });
-exports.RelationWithTasksSchema = zod_1.default.discriminatedUnion('relation_location', [exports.LocalRelationWithTasksSchema, exports.ServerRelationWithTasksSchema]);
-exports.RelationSchema = zod_1.default.discriminatedUnion('relation_location', [exports.LocalRelationSchema, exports.ServerRelationSchema]);
+exports.RelationWithTasksSchema = zod_1.default.discriminatedUnion('relation_location', [
+    exports.LocalRelationWithTasksSchema,
+    exports.ServerRelationWithTasksSchema,
+]);
+exports.RelationSchema = zod_1.default.discriminatedUnion('relation_location', [
+    exports.LocalRelationSchema,
+    exports.ServerRelationSchema,
+]);
 //# sourceMappingURL=relations.js.map

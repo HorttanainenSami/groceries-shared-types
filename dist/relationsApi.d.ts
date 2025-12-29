@@ -3,6 +3,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
     id: z.ZodString;
     name: z.ZodString;
     created_at: z.ZodString;
+    last_modified: z.ZodString;
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
@@ -29,6 +30,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
     name: string;
     id: string;
     created_at: string;
+    last_modified: string;
     permission: "owner" | "edit";
     relation_location: "Server";
     shared_with: {
@@ -44,6 +46,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
     name: string;
     id: string;
     created_at: string;
+    last_modified: string;
     permission: "owner" | "edit";
     relation_location: "Server";
     shared_with: {
@@ -62,6 +65,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         created_at: z.ZodString;
+        last_modified: z.ZodString;
     } & {
         relation_location: z.ZodLiteral<"Local">;
     } & {
@@ -72,6 +76,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: z.ZodNullable<z.ZodString>;
             completed_at: z.ZodNullable<z.ZodString>;
             task_relations_id: z.ZodString;
+            last_modified: z.ZodString;
             order_idx: z.ZodDefault<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
@@ -80,6 +85,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -88,6 +94,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, {
             id: string;
@@ -96,6 +103,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -104,12 +112,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, "many">;
     }, "strip", z.ZodTypeAny, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -118,12 +128,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     }, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -132,12 +144,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     }>, z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         created_at: z.ZodString;
+        last_modified: z.ZodString;
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;
@@ -163,6 +177,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: z.ZodNullable<z.ZodString>;
             completed_at: z.ZodNullable<z.ZodString>;
             task_relations_id: z.ZodString;
+            last_modified: z.ZodString;
             order_idx: z.ZodDefault<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
@@ -171,6 +186,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -179,6 +195,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, {
             id: string;
@@ -187,6 +204,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -195,12 +213,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, "many">;
     }, "strip", z.ZodTypeAny, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -215,12 +235,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     }, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -235,6 +257,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     }>]>, "many">;
@@ -244,6 +267,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -252,12 +276,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     } | {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -272,6 +298,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     })[];
@@ -281,6 +308,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -289,12 +317,14 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     } | {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -309,6 +339,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     })[];
@@ -318,6 +349,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
     id: z.ZodString;
     name: z.ZodString;
     created_at: z.ZodString;
+    last_modified: z.ZodString;
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
@@ -343,6 +375,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
     id: z.ZodString;
     name: z.ZodString;
     created_at: z.ZodString;
+    last_modified: z.ZodString;
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
@@ -391,6 +424,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         created_at: z.ZodString;
+        last_modified: z.ZodString;
     } & {
         relation_location: z.ZodLiteral<"Local">;
     } & {
@@ -401,6 +435,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: z.ZodNullable<z.ZodString>;
             completed_at: z.ZodNullable<z.ZodString>;
             task_relations_id: z.ZodString;
+            last_modified: z.ZodString;
             order_idx: z.ZodDefault<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
@@ -409,6 +444,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -417,6 +453,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, {
             id: string;
@@ -425,6 +462,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -433,12 +471,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, "many">;
     }, "strip", z.ZodTypeAny, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -447,12 +487,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     }, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -461,12 +503,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     }>, z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         created_at: z.ZodString;
+        last_modified: z.ZodString;
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;
@@ -492,6 +536,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: z.ZodNullable<z.ZodString>;
             completed_at: z.ZodNullable<z.ZodString>;
             task_relations_id: z.ZodString;
+            last_modified: z.ZodString;
             order_idx: z.ZodDefault<z.ZodNumber>;
         }, "strip", z.ZodTypeAny, {
             id: string;
@@ -500,6 +545,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -508,6 +554,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, {
             id: string;
@@ -516,6 +563,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }, {
             id: string;
@@ -524,12 +572,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }>, "many">;
     }, "strip", z.ZodTypeAny, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -544,12 +594,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     }, {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -564,6 +616,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     }>]>, "many">;
@@ -575,6 +628,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -583,12 +637,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     } | {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -603,6 +659,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx: number;
         }[];
     })[];
@@ -613,6 +670,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         relation_location: "Local";
         tasks: {
             id: string;
@@ -621,12 +679,14 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     } | {
         name: string;
         id: string;
         created_at: string;
+        last_modified: string;
         permission: "owner" | "edit";
         relation_location: "Server";
         shared_with: {
@@ -641,6 +701,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             completed_by: string | null;
             completed_at: string | null;
             task_relations_id: string;
+            last_modified: string;
             order_idx?: number | undefined;
         }[];
     })[];
@@ -662,6 +723,7 @@ export declare const getRelationsByIdPropsSchema: z.ZodObject<{
         id: z.ZodString;
         name: z.ZodString;
         created_at: z.ZodString;
+        last_modified: z.ZodString;
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;

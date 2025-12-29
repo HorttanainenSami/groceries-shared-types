@@ -6,6 +6,7 @@ export declare const basicTaskSchema: z.ZodObject<{
     completed_by: z.ZodNullable<z.ZodString>;
     completed_at: z.ZodNullable<z.ZodString>;
     task_relations_id: z.ZodString;
+    last_modified: z.ZodString;
     order_idx: z.ZodDefault<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     id: string;
@@ -14,6 +15,7 @@ export declare const basicTaskSchema: z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx: number;
 }, {
     id: string;
@@ -22,6 +24,7 @@ export declare const basicTaskSchema: z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx?: number | undefined;
 }>;
 export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
@@ -31,6 +34,7 @@ export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: z.ZodNullable<z.ZodString>;
     completed_at: z.ZodNullable<z.ZodString>;
     task_relations_id: z.ZodString;
+    last_modified: z.ZodString;
     order_idx: z.ZodDefault<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     id: string;
@@ -39,6 +43,7 @@ export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx: number;
 }, {
     id: string;
@@ -47,6 +52,7 @@ export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx?: number | undefined;
 }>, {
     id: string;
@@ -55,6 +61,7 @@ export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx: number;
 }, {
     id: string;
@@ -63,6 +70,7 @@ export declare const TaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx?: number | undefined;
 }>;
 export type TaskType = z.infer<typeof TaskSchema>;
@@ -135,6 +143,7 @@ export declare const editTaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: z.ZodNullable<z.ZodString>;
     completed_at: z.ZodNullable<z.ZodString>;
     task_relations_id: z.ZodString;
+    last_modified: z.ZodString;
     order_idx: z.ZodDefault<z.ZodNumber>;
 }, "strip", z.ZodTypeAny, {
     id: string;
@@ -143,6 +152,7 @@ export declare const editTaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx: number;
 }, {
     id: string;
@@ -151,6 +161,7 @@ export declare const editTaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx?: number | undefined;
 }>, {
     id: string;
@@ -159,6 +170,7 @@ export declare const editTaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx: number;
 }, {
     id: string;
@@ -167,6 +179,7 @@ export declare const editTaskSchema: z.ZodEffects<z.ZodObject<{
     completed_by: string | null;
     completed_at: string | null;
     task_relations_id: string;
+    last_modified: string;
     order_idx?: number | undefined;
 }>;
 //# sourceMappingURL=task.d.ts.map

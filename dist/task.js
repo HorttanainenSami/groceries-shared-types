@@ -12,6 +12,7 @@ exports.basicTaskSchema = zod_1.default.object({
     completed_by: zod_1.default.string().uuid().nullable(),
     completed_at: zod_1.default.string().datetime().nullable(),
     task_relations_id: zod_1.default.string().uuid(),
+    last_modified: zod_1.default.string().datetime(),
     order_idx: zod_1.default.number().default(9999),
 });
 exports.TaskSchema = exports.basicTaskSchema.refine((data) => !(data.completed_at && !data.completed_by), {
