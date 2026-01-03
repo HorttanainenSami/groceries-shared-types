@@ -22,7 +22,7 @@ exports.BasicRelationSchema = zod_1.default.object({
 exports.ServerRelationSchema = exports.BasicRelationSchema.extend({
     relation_location: zod_1.default.literal('Server'),
     permission: exports.permissionEnum,
-    shared_with: users_1.userSchema.omit({ password: true }).array(),
+    shared_with: users_1.userSchema.omit({ password: true }).array().nullable(),
 });
 exports.LocalRelationSchema = exports.BasicRelationSchema.extend({
     relation_location: zod_1.default.literal('Local'),

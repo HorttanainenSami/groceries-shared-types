@@ -7,7 +7,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
-    shared_with: z.ZodArray<z.ZodObject<Omit<{
+    shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
         name: z.ZodString;
         email: z.ZodString;
         password: z.ZodString;
@@ -20,7 +20,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
         name: string;
         email: string;
         id: string;
-    }>, "many">;
+    }>, "many">>;
 } & {
     my_permission: z.ZodString;
     shared_with_id: z.ZodString;
@@ -37,7 +37,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
         name: string;
         email: string;
         id: string;
-    }[];
+    }[] | null;
     my_permission: string;
     shared_with_id: string;
     shared_with_name: string;
@@ -53,7 +53,7 @@ export declare const getRelationsResponseSchema: z.ZodObject<{
         name: string;
         email: string;
         id: string;
-    }[];
+    }[] | null;
     my_permission: string;
     shared_with_id: string;
     shared_with_name: string;
@@ -155,7 +155,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;
-        shared_with: z.ZodArray<z.ZodObject<Omit<{
+        shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
             name: z.ZodString;
             email: z.ZodString;
             password: z.ZodString;
@@ -168,7 +168,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }>, "many">;
+        }>, "many">>;
     } & {
         tasks: z.ZodArray<z.ZodEffects<z.ZodObject<{
             id: z.ZodString;
@@ -227,7 +227,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -249,7 +249,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -290,7 +290,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -331,7 +331,7 @@ export declare const postRelationAndShareWithUserRequestSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -353,7 +353,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
-    shared_with: z.ZodArray<z.ZodObject<Omit<{
+    shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
         name: z.ZodString;
         email: z.ZodString;
         password: z.ZodString;
@@ -366,7 +366,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
         name: string;
         email: string;
         id: string;
-    }>, "many">;
+    }>, "many">>;
 }, "id">, "strip", z.ZodTypeAny, {
     id: string;
 }, {
@@ -379,7 +379,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
 } & {
     relation_location: z.ZodLiteral<"Server">;
     permission: z.ZodEnum<["owner", "edit"]>;
-    shared_with: z.ZodArray<z.ZodObject<Omit<{
+    shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
         name: z.ZodString;
         email: z.ZodString;
         password: z.ZodString;
@@ -392,7 +392,7 @@ export declare const deleteRelationParamsSchema: z.ZodUnion<[z.ZodArray<z.ZodObj
         name: string;
         email: string;
         id: string;
-    }>, "many">;
+    }>, "many">>;
 }, "id">, "strip", z.ZodTypeAny, {
     id: string;
 }, {
@@ -514,7 +514,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;
-        shared_with: z.ZodArray<z.ZodObject<Omit<{
+        shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
             name: z.ZodString;
             email: z.ZodString;
             password: z.ZodString;
@@ -527,7 +527,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }>, "many">;
+        }>, "many">>;
     } & {
         tasks: z.ZodArray<z.ZodEffects<z.ZodObject<{
             id: z.ZodString;
@@ -586,7 +586,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -608,7 +608,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -651,7 +651,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -693,7 +693,7 @@ export declare const createAndShareRelationsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }[];
+        }[] | null;
         tasks: {
             id: string;
             task: string;
@@ -727,7 +727,7 @@ export declare const getRelationsByIdPropsSchema: z.ZodObject<{
     } & {
         relation_location: z.ZodLiteral<"Server">;
         permission: z.ZodEnum<["owner", "edit"]>;
-        shared_with: z.ZodArray<z.ZodObject<Omit<{
+        shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
             name: z.ZodString;
             email: z.ZodString;
             password: z.ZodString;
@@ -740,7 +740,7 @@ export declare const getRelationsByIdPropsSchema: z.ZodObject<{
             name: string;
             email: string;
             id: string;
-        }>, "many">;
+        }>, "many">>;
     }, "id">, "strip", z.ZodTypeAny, {
         id: string;
     }, {

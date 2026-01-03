@@ -22,7 +22,7 @@ export const BasicRelationSchema = z.object({
 export const ServerRelationSchema = BasicRelationSchema.extend({
   relation_location: z.literal('Server'),
   permission: permissionEnum,
-  shared_with: userSchema.omit({ password: true }).array(),
+  shared_with: userSchema.omit({ password: true }).array().nullable(),
 });
 export type ServerRelationType = z.infer<typeof ServerRelationSchema>;
 
