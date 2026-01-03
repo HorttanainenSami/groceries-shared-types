@@ -30,7 +30,7 @@ export interface ServerToClientEvents {
   'relations:share': (payload: ServerRelationWithTasksType[]) => void;
 
   'task:join': (payload: { data: ServerRelationWithTasksType }) => void;
-  'task:create': (payload: { data: TaskType }) => void;
+  'task:create': (payload: { data: TaskType[] }) => void;
 
   'task:edit': (payload: { edited_task: TaskType }) => void;
   'task:remove': (payload: { remove_tasks: TaskType[] }) => void;
@@ -91,7 +91,7 @@ export interface ClientToServerEvents {
   ) => void;
   'task:reorder': (
     payload: {
-      reodred_tasks: TaskType[];
+      reordered_tasks: TaskType[];
     },
     callback: (res: AckResponse<TaskType[]>) => void
   ) => void;
