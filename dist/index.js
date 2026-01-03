@@ -21,4 +21,5 @@ __exportStar(require("./utils"), exports);
 __exportStar(require("./socket"), exports);
 __exportStar(require("./relationsApi"), exports);
 __exportStar(require("./task"), exports);
+__exportStar(require("./syncTypes"), exports);
 //# sourceMappingURL=index.js.map
