@@ -3,7 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.SyncBatchResponseSchema = exports.SyncBatchRequestSchema = exports.PendingOperationSchema = exports.PendingTypeEnum = void 0;
+exports.SyncBatchResponseSchema = exports.FailedOperation = exports.RelationLWWConflictFailed = exports.TaskLWWConflictFailed = exports.BaseFailed = exports.SyncBatchRequestSchema = exports.PendingOperationSchema = exports.PendingTypeEnum = void 0;
 const task_1 = require("./task");
 const relations_1 = require("./relations");
 const zod_1 = __importDefault(require("zod"));
@@ -93,8 +93,26 @@ exports.PendingOperationSchema = zod_1.default.discriminatedUnion('type', [
 exports.SyncBatchRequestSchema = zod_1.default.object({
     operations: exports.PendingOperationSchema.array(),
 });
+exports.BaseFailed = zod_1.default.object({
+    id: zod_1.default.string().uuid(),
+    reason: zod_1.default.string(),
+    type: zod_1.default.literal('simple'),
+});
+exports.TaskLWWConflictFailed = exports.BaseFailed.extend({
+    serverTask: task_1.TaskSchema,
+    type: zod_1.default.literal('task'),
+});
+exports.RelationLWWConflictFailed = exports.BaseFailed.extend({
+    serverRelations: relations_1.ServerRelationSchema,
+    type: zod_1.default.literal('relation'),
+});
+exports.FailedOperation = zod_1.default.discriminatedUnion('type', [
+    exports.BaseFailed,
+    exports.TaskLWWConflictFailed,
+    exports.RelationLWWConflictFailed,
+]);
 exports.SyncBatchResponseSchema = zod_1.default.object({
-    success: zod_1.default.string().uuid().array(),
-    failed: zod_1.default.string().uuid().array(),
+    success: zod_1.default.object({ id: zod_1.default.string().uuid() }).array(),
+    failed: exports.FailedOperation.array(),
 });
 //# sourceMappingURL=syncTypes.js.map

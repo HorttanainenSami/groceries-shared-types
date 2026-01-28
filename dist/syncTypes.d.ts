@@ -1223,15 +1223,631 @@ export declare const SyncBatchRequestSchema: z.ZodObject<{
     })[];
 }>;
 export type SyncBatchRequest = z.infer<typeof SyncBatchRequestSchema>;
-export declare const SyncBatchResponseSchema: z.ZodObject<{
-    success: z.ZodArray<z.ZodString, "many">;
-    failed: z.ZodArray<z.ZodString, "many">;
+export declare const BaseFailed: z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+    type: z.ZodLiteral<"simple">;
 }, "strip", z.ZodTypeAny, {
-    success: string[];
-    failed: string[];
+    id: string;
+    type: "simple";
+    reason: string;
 }, {
-    success: string[];
-    failed: string[];
+    id: string;
+    type: "simple";
+    reason: string;
+}>;
+export declare const TaskLWWConflictFailed: z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+} & {
+    serverTask: z.ZodEffects<z.ZodObject<{
+        id: z.ZodString;
+        task: z.ZodString;
+        created_at: z.ZodString;
+        completed_by: z.ZodNullable<z.ZodString>;
+        completed_at: z.ZodNullable<z.ZodString>;
+        task_relations_id: z.ZodString;
+        last_modified: z.ZodString;
+        order_idx: z.ZodDefault<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    }, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    }>, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    }, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    }>;
+    type: z.ZodLiteral<"task">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    type: "task";
+    reason: string;
+    serverTask: {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    };
+}, {
+    id: string;
+    type: "task";
+    reason: string;
+    serverTask: {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    };
+}>;
+export declare const RelationLWWConflictFailed: z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+} & {
+    serverRelations: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        created_at: z.ZodString;
+        last_modified: z.ZodString;
+    } & {
+        relation_location: z.ZodLiteral<"Server">;
+        permission: z.ZodEnum<["owner", "edit"]>;
+        shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
+            name: z.ZodString;
+            email: z.ZodString;
+            password: z.ZodString;
+            id: z.ZodString;
+        }, "password">, "strip", z.ZodTypeAny, {
+            name: string;
+            email: string;
+            id: string;
+        }, {
+            name: string;
+            email: string;
+            id: string;
+        }>, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    }, {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    }>;
+    type: z.ZodLiteral<"relation">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    type: "relation";
+    reason: string;
+    serverRelations: {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    };
+}, {
+    id: string;
+    type: "relation";
+    reason: string;
+    serverRelations: {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    };
+}>;
+export declare const FailedOperation: z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+    type: z.ZodLiteral<"simple">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    type: "simple";
+    reason: string;
+}, {
+    id: string;
+    type: "simple";
+    reason: string;
+}>, z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+} & {
+    serverTask: z.ZodEffects<z.ZodObject<{
+        id: z.ZodString;
+        task: z.ZodString;
+        created_at: z.ZodString;
+        completed_by: z.ZodNullable<z.ZodString>;
+        completed_at: z.ZodNullable<z.ZodString>;
+        task_relations_id: z.ZodString;
+        last_modified: z.ZodString;
+        order_idx: z.ZodDefault<z.ZodNumber>;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    }, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    }>, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    }, {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    }>;
+    type: z.ZodLiteral<"task">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    type: "task";
+    reason: string;
+    serverTask: {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx: number;
+    };
+}, {
+    id: string;
+    type: "task";
+    reason: string;
+    serverTask: {
+        id: string;
+        task: string;
+        created_at: string;
+        completed_by: string | null;
+        completed_at: string | null;
+        task_relations_id: string;
+        last_modified: string;
+        order_idx?: number | undefined;
+    };
+}>, z.ZodObject<{
+    id: z.ZodString;
+    reason: z.ZodString;
+} & {
+    serverRelations: z.ZodObject<{
+        id: z.ZodString;
+        name: z.ZodString;
+        created_at: z.ZodString;
+        last_modified: z.ZodString;
+    } & {
+        relation_location: z.ZodLiteral<"Server">;
+        permission: z.ZodEnum<["owner", "edit"]>;
+        shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
+            name: z.ZodString;
+            email: z.ZodString;
+            password: z.ZodString;
+            id: z.ZodString;
+        }, "password">, "strip", z.ZodTypeAny, {
+            name: string;
+            email: string;
+            id: string;
+        }, {
+            name: string;
+            email: string;
+            id: string;
+        }>, "many">>;
+    }, "strip", z.ZodTypeAny, {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    }, {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    }>;
+    type: z.ZodLiteral<"relation">;
+}, "strip", z.ZodTypeAny, {
+    id: string;
+    type: "relation";
+    reason: string;
+    serverRelations: {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    };
+}, {
+    id: string;
+    type: "relation";
+    reason: string;
+    serverRelations: {
+        name: string;
+        id: string;
+        created_at: string;
+        last_modified: string;
+        permission: "owner" | "edit";
+        relation_location: "Server";
+        shared_with: {
+            name: string;
+            email: string;
+            id: string;
+        }[] | null;
+    };
+}>]>;
+export type FailedOperationType = z.infer<typeof FailedOperation>;
+export declare const SyncBatchResponseSchema: z.ZodObject<{
+    success: z.ZodArray<z.ZodObject<{
+        id: z.ZodString;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+    }, {
+        id: string;
+    }>, "many">;
+    failed: z.ZodArray<z.ZodDiscriminatedUnion<"type", [z.ZodObject<{
+        id: z.ZodString;
+        reason: z.ZodString;
+        type: z.ZodLiteral<"simple">;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        type: "simple";
+        reason: string;
+    }, {
+        id: string;
+        type: "simple";
+        reason: string;
+    }>, z.ZodObject<{
+        id: z.ZodString;
+        reason: z.ZodString;
+    } & {
+        serverTask: z.ZodEffects<z.ZodObject<{
+            id: z.ZodString;
+            task: z.ZodString;
+            created_at: z.ZodString;
+            completed_by: z.ZodNullable<z.ZodString>;
+            completed_at: z.ZodNullable<z.ZodString>;
+            task_relations_id: z.ZodString;
+            last_modified: z.ZodString;
+            order_idx: z.ZodDefault<z.ZodNumber>;
+        }, "strip", z.ZodTypeAny, {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx: number;
+        }, {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx?: number | undefined;
+        }>, {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx: number;
+        }, {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx?: number | undefined;
+        }>;
+        type: z.ZodLiteral<"task">;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        type: "task";
+        reason: string;
+        serverTask: {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx: number;
+        };
+    }, {
+        id: string;
+        type: "task";
+        reason: string;
+        serverTask: {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx?: number | undefined;
+        };
+    }>, z.ZodObject<{
+        id: z.ZodString;
+        reason: z.ZodString;
+    } & {
+        serverRelations: z.ZodObject<{
+            id: z.ZodString;
+            name: z.ZodString;
+            created_at: z.ZodString;
+            last_modified: z.ZodString;
+        } & {
+            relation_location: z.ZodLiteral<"Server">;
+            permission: z.ZodEnum<["owner", "edit"]>;
+            shared_with: z.ZodNullable<z.ZodArray<z.ZodObject<Omit<{
+                name: z.ZodString;
+                email: z.ZodString;
+                password: z.ZodString;
+                id: z.ZodString;
+            }, "password">, "strip", z.ZodTypeAny, {
+                name: string;
+                email: string;
+                id: string;
+            }, {
+                name: string;
+                email: string;
+                id: string;
+            }>, "many">>;
+        }, "strip", z.ZodTypeAny, {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        }, {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        }>;
+        type: z.ZodLiteral<"relation">;
+    }, "strip", z.ZodTypeAny, {
+        id: string;
+        type: "relation";
+        reason: string;
+        serverRelations: {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        };
+    }, {
+        id: string;
+        type: "relation";
+        reason: string;
+        serverRelations: {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        };
+    }>]>, "many">;
+}, "strip", z.ZodTypeAny, {
+    success: {
+        id: string;
+    }[];
+    failed: ({
+        id: string;
+        type: "simple";
+        reason: string;
+    } | {
+        id: string;
+        type: "task";
+        reason: string;
+        serverTask: {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx: number;
+        };
+    } | {
+        id: string;
+        type: "relation";
+        reason: string;
+        serverRelations: {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        };
+    })[];
+}, {
+    success: {
+        id: string;
+    }[];
+    failed: ({
+        id: string;
+        type: "simple";
+        reason: string;
+    } | {
+        id: string;
+        type: "task";
+        reason: string;
+        serverTask: {
+            id: string;
+            task: string;
+            created_at: string;
+            completed_by: string | null;
+            completed_at: string | null;
+            task_relations_id: string;
+            last_modified: string;
+            order_idx?: number | undefined;
+        };
+    } | {
+        id: string;
+        type: "relation";
+        reason: string;
+        serverRelations: {
+            name: string;
+            id: string;
+            created_at: string;
+            last_modified: string;
+            permission: "owner" | "edit";
+            relation_location: "Server";
+            shared_with: {
+                name: string;
+                email: string;
+                id: string;
+            }[] | null;
+        };
+    })[];
 }>;
 export type SyncBatchResponse = z.infer<typeof SyncBatchResponseSchema>;
 export type InsertPendingOperation = Omit<PendingOperation, 'retryCount'> & {

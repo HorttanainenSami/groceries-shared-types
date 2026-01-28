@@ -1,5 +1,5 @@
-import { basicTaskSchema } from './task';
-import { RelationSchema } from './relations';
+import { basicTaskSchema, TaskSchema } from './task';
+import { RelationSchema, ServerRelationSchema } from './relations';
 import z from 'zod';
 export const PendingTypeEnum = z.enum([
   'relation-edit',
@@ -101,10 +101,29 @@ export const SyncBatchRequestSchema = z.object({
 });
 
 export type SyncBatchRequest = z.infer<typeof SyncBatchRequestSchema>;
+export const BaseFailed = z.object({
+  id: z.string().uuid(),
+  reason: z.string(),
+  type: z.literal('simple'),
+});
+export const TaskLWWConflictFailed = BaseFailed.extend({
+  serverTask: TaskSchema,
+  type: z.literal('task'),
+});
+export const RelationLWWConflictFailed = BaseFailed.extend({
+  serverRelations: ServerRelationSchema,
+  type: z.literal('relation'),
+});
+export const FailedOperation = z.discriminatedUnion('type', [
+  BaseFailed,
+  TaskLWWConflictFailed,
+  RelationLWWConflictFailed,
+]);
+export type FailedOperationType = z.infer<typeof FailedOperation>;
 
 export const SyncBatchResponseSchema = z.object({
-  success: z.string().uuid().array(),
-  failed: z.string().uuid().array(),
+  success: z.object({ id: z.string().uuid() }).array(),
+  failed: FailedOperation.array(),
 });
 
 export type SyncBatchResponse = z.infer<typeof SyncBatchResponseSchema>;
